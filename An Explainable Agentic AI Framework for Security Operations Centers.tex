@@ -1,0 +1,1192 @@
+\documentclass[12pt,a4paper]{report}
+
+% ============================================================
+% PACKAGES
+% ============================================================
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\geometry{margin=1in}
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=blue,
+    urlcolor=blue,
+    pdftitle={An Explainable Agentic AI Framework for Security Operations Centers},
+    pdfauthor={Mazen Abdulmalek Abdulraman Alhidary}
+}
+\usepackage{setspace}
+\onehalfspacing
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{parskip}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{makecell}
+
+% ============================================================
+% HEADER / FOOTER
+% ============================================================
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\leftmark}
+\fancyhead[R]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% ============================================================
+% TITLE PAGE
+% ============================================================
+\begin{document}
+
+\begin{titlepage}
+    \centering
+    \vspace*{1cm}
+    
+    {\Large \textbf{2026}}
+    
+    \vspace{1.5cm}
+    
+    {\LARGE \textbf{An Explainable Agentic AI Framework for Security Operations Centers:}}\\[0.4cm]
+    {\LARGE \textbf{Enhancing Threat Detection, Incident Response, and Analyst Trust}}
+    
+    \vspace{2cm}
+    
+    {\large A Research Proposal Submitted in Partial Fulfillment of the Requirements for The Degree of Master of Cybersecurity}
+    
+    \vspace{2cm}
+    
+    \textbf{Prepared By:}\\
+    Mazen Abdulmalek Abdulraman Alhidary\\
+    ID: 2026-1533\\
+    \texttt{mazen.alhidary@su.edu.ye}
+    
+    \vspace{1.5cm}
+    
+    Faculty of Computer and Information Technology\\
+    Department of Cybersecurity\\
+    Sana'a University\\
+    Sana'a, Yemen
+    
+    \vspace{1cm}
+    
+    June, 2026
+    
+    \vspace{1cm}
+    
+    \textbf{Supervisor:}\\
+    Assoc. Prof. Ahmed A. Al-Shalabi
+    
+    \vfill
+\end{titlepage}
+
+% ============================================================
+% ABSTRACT
+% ============================================================
+\begin{abstract}
+The increasing number and complexity of cyber assaults is placing growing pressure on Security Operations Centers (SOCs), resulting in alert fatigue, slow response times and a shortage of skilled analysts. Agentic Artificial Intelligence (Agentic AI) offers a promising solution for autonomous threat detection and response, but the ``black-box'' nature of such systems reduces analyst trust and limits adoption. The research aims to design, implement and evaluate a new Explainable Agentic AI Framework that integrates autonomous AI agents with Explainable AI (XAI) mechanisms. The framework will enhance threat detection, enhance incident response metrics (MTTD/MTTR), and, importantly, build analyst trust via transparent, human-understandable explanations. We will evaluate the framework against traditional and AI-based SOC approaches through a quantitative experimental methodology, using public cybersecurity datasets (CICIDS2017, UNSW-NB15) and a simulated SOC environment.
+\end{abstract}
+
+\vspace{0.3cm}
+\noindent\textbf{Keywords:} Agentic AI; Explainable AI (XAI); Security Operations Center (SOC); Threat Detection; Incident Response; Analyst Trust; Autonomous Security; Cybersecurity; Multi-Agent Systems; SHAP; MTTD; MTTR
+
+\newpage
+
+% ============================================================
+% TABLE OF CONTENTS
+% ============================================================
+\tableofcontents
+\listoftables
+
+\newpage
+
+% ============================================================
+% CHAPTER ONE: INTRODUCTION
+% ============================================================
+\chapter{Introduction}
+\label{ch:introduction}
+
+\section{Introduction}
+\label{sec:intro}
+
+The rapid digital transformation of organizations and the growing sophistication of cyber assaults have greatly increased the responsibilities of Security Operations Centers (SOCs). Today's SOCs must continuously monitor for, detect, analyze and respond to an ever-growing volume of security events from sophisticated enterprise environments like cloud platforms, endpoints, networks and Internet of Things (IoT) devices. The growing sophistication and persistence of cyberattacks have exposed the limitations of traditional rule-based security monitoring approaches to deal with the scale and complexity of contemporary threats. To overcome these challenges, Artificial Intelligence (AI) technologies have been more and more employed in SOC operations. Machine learning and deep learning, as well as automated orchestration systems, have enhanced the ability of SOCs to identify anomalies, prioritize alerts and automate incident response activities. Most recently, Agentic Artificial Intelligence (Agentic AI) has emerged as a promising paradigm that allows autonomous and goal-oriented AI agents to perform complex security tasks with minimal human intervention. These intelligent agents are capable of perceiving their environment independently, reasoning about security events, making decisions and executing appropriate response actions.
+
+Agentic AI provides operational advantages, but the transparency and interpretability of the decisions driven by AI is a major challenge. Security analysts often struggle to understand the rationale behind the AI-generated recommendations and the automated actions taken. The lack of explainability can erode trust in artificial intelligence systems and impede their adoption in actual SOC environments. Explainable Artificial Intelligence (XAI) has become a major research area that aims to help explain AI decisions in a way that humans can understand, improving transparency, accountability, and analyst confidence.
+
+% ------------------------------------------------------------
+\section{Background of the Study}
+\label{sec:background}
+
+Security Operations Centers are the first line of defense in modern organizations against cyber assaults. Traditionally, SOC operations have relied on Security Information and Event Management (SIEM) systems, predefined correlation rules, and manual investigation processes. While effective against known threats, these approaches have serious limitations in dealing with advanced persistent threats, zero-day attacks, insider threats, and sophisticated social engineering campaigns.
+
+New AI-based cybersecurity solutions have emerged that offer new capabilities for automated threat detection and response. Machine learning algorithms can identify anomalous behavior patterns, while Security Orchestration, Automation and Response (SOAR) platforms automate repetitive security tasks. Recent advances in Agentic Artificial Intelligence systems capable of performing complex security operations autonomously have further progressed toward autonomous SOCs.
+
+As opposed to traditional artificial intelligence systems, agentic AI contains autonomous reasoning, planning, adaptation and decision making capabilities. Within the framework of SOC environments, AI agents are capable of observing security events, correlating data from different sources, assessing incidents, suggesting mitigation actions, and executing response procedures autonomously.
+
+But as artificial intelligence systems become more autonomous, concerns arise about transparency, accountability and trustworthiness of standard artificial intelligence systems. Security analysts often are hesitant in trusting AI decisions if they don't know how the AI came to that decision. In recent years, the importance of Explainable AI (XAI) in security environments has been emphasized.
+
+% ------------------------------------------------------------
+\section{Problem Statement}
+\label{sec:problem}
+
+The increasing complexity and volume of cybersecurity threats have posed significant operational challenges for Security Operations Centers. Traditional SOCs are often bogged down by alert fatigue, slow incident response and over-reliance on human analysts. Agentic AI provides opportunities to automate security operations, enhance detection and response. However, most current Agentic artificial intelligence systems are black-box models, providing limited visibility into the decision-making process.
+
+The lack of explainability reduces analyst trust, hampers decision validation and causes problems for regulatory compliance and accountability. Security analysts may be reluctant to rely on the recommendations made by AI or to take autonomous response actions if the reasons behind those recommendations cannot be sufficiently explained or validated.
+
+Thus, an integrated framework is needed that combines the autonomous capabilities of Agentic AI and the transparency of Explainable AI. Such a framework should improve threat detection and incident response performance, and increase analyst trust and acceptance of AI-driven decisions in SOC environments.
+
+% ------------------------------------------------------------
+\section{Significance of the Study}
+\label{sec:significance}
+
+This study contributes to both academic research and practical cybersecurity operations.
+
+\subsection{Academic Significance}
+\begin{enumerate}[label=\arabic*.]
+    \item Draws upon current research on Agentic AI in the field of cybersecurity.
+    \item Contributes to the growing body of knowledge on Explainable AI in SOC environments.
+    \item Provides a conceptual framework integrating Agentic AI and XAI.
+    \item Addresses a research gap regarding analyst trust in autonomous security systems.
+\end{enumerate}
+
+\subsection{Practical Significance}
+\begin{enumerate}[label=\arabic*.]
+    \item Improves accuracy of threat detection in SOC operations.
+    \item Improves the speed and efficiency of incident response.
+    \item Reduces analyst workload and alert fatigue.
+    \item Increases trust and acceptance of AI-assisted security decisions.
+    \item Supports organizational adoption of autonomous SOC technologies.
+\end{enumerate}
+
+% ------------------------------------------------------------
+\section{Research Questions}
+\label{sec:research_questions}
+
+\subsection{Main Research Question}
+How can an Explainable Agentic AI Framework improve threat detection, incident response and analyst trust in Security Operations Centers?
+
+\subsection{Sub-Questions}
+\begin{enumerate}[label=\arabic*.]
+    \item What are the limitations of the existing AI-powered SOC solutions?
+    \item How can Agentic AI improve threat detection and incident response?
+    \item How can Explainable AI improve transparency and trust in AI-generated security decisions?
+    \item What architecture is suitable for integrating Agentic AI and XAI in SOC environments?
+    \item What is the impact of the proposed framework on SOC performance indicators like detection accuracy, MTTD, and MTTR?
+    \item What is the effect of explainability on the acceptance of autonomous AI decisions by analysts?
+\end{enumerate}
+
+% ------------------------------------------------------------
+\section{Objectives of the Study}
+\label{sec:objectives}
+
+\subsection{General Objective}
+To develop and evaluate an Explainable Agentic AI Framework that enhances threat detection, incident response, and analyst trust in Security Operations Centers.
+
+\subsection{Specific Objectives}
+\begin{enumerate}[label=\arabic*.]
+    \item To examine the use of Agentic AI in SOC operations.
+    \item To review Explainable AI techniques relevant to the cybersecurity environments.
+    \item To develop an integrated Explainable Agentic AI Framework for SOCs.
+    \item To evaluate the framework's effectiveness in threat detection and incident response.
+    \item To study the impact of explainability on analyst trust and the decision-making process.
+    \item To compare the proposed framework with traditional SOC approaches.
+\end{enumerate}
+
+% ------------------------------------------------------------
+\section{Limitations of the Study}
+\label{sec:limitations}
+
+This study is subject to the following limitations:
+
+\begin{enumerate}[label=\arabic*.]
+    \item The evaluation will be performed on publicly available cybersecurity datasets and simulated SOC environments.
+    \item The proposed framework will focus on enterprise SOC operations and may not directly generalize to all industry sectors.
+    \item Analyst trust measurements may be based on controlled evaluation scenarios instead of long-term operational deployments.
+    \item The study is mainly aimed at threat detection and incident response processes.
+    \item Regulatory and legal considerations will be discussed conceptually rather than empirically evaluated.
+\end{enumerate}
+
+% ------------------------------------------------------------
+\section{Methodology of the Study}
+\label{sec:methodology_intro}
+
+The research methodology of this study is quantitative and based on experimental evaluation. The research process consists of the following stages:
+
+\begin{enumerate}[label=\arabic*.]
+    \item Literature review of Agentic AI, Explainable AI, and SOC technologies.
+    \item Design of the Explainable Agentic AI Framework.
+    \item Development of autonomous AI agents for threat analysis and response.
+    \item Integration of Explainable AI mechanisms into agent decision-making workflows.
+    \item Experimental evaluation using cybersecurity datasets.
+    \item Performance assessment using metrics such as Accuracy, Precision, Recall, F1-Score, Mean Time to Detect (MTTD), and Mean Time to Respond (MTTR).
+    \item Analysis of analyst trust and explanation acceptance.
+\end{enumerate}
+
+% ------------------------------------------------------------
+\section{Thesis Structure}
+\label{sec:thesis_structure}
+
+This thesis is organized into six chapters:
+
+\begin{description}
+    \item[Chapter One: Introduction] Presents background, problem statement, objectives, research questions, significance, limitations, methodology and overall structure of the research.
+    \item[Chapter Two: Literature Review] Review of current literature on Security Operations Centers, Agentic AI, Explainable AI, autonomous SOCs and relevant cybersecurity frameworks.
+    \item[Chapter Three: Research Methodology] Describes the research design, datasets, tools, framework architecture, experimental procedures and evaluation metrics.
+    \item[Chapter Four: Framework Design and Implementation] Presents the proposed Explainable Agentic AI Framework. Details the architecture, components, and implementation process of the presented framework.
+    \item[Chapter Five: Results and Discussion] Experimental results, performance assessment, comparative analysis and discussion of the results are reported.
+    \item[Chapter Six: Conclusion and Future Work] This study summarizes the findings, describes the contributions, presents the limitations, and proposes future research directions.
+\end{description}
+
+% ============================================================
+% CHAPTER TWO: LITERATURE REVIEW
+% ============================================================
+\chapter{Literature Review}
+\label{ch:literature}
+
+\section{Introduction}
+\label{sec:lit_intro}
+
+This chapter reviews the theoretical foundation and previous research on Security Operations Center (SOC), Artificial Intelligence (AI), AI Agents, Cognitive AI Agents, Agentic AI, Autonomous SOCs, Explainable Artificial Intelligence (XAI). In this chapter, we aim to identify current challenges, research progress and common shortcomings in AI-enabled cybersecurity practices. The chapter concludes by stating the research gap and a conceptual framework that guides the proposed investigation.
+
+% ------------------------------------------------------------
+\section{Security Operations Centers (SOC)}
+\label{sec:soc}
+
+\subsection{Definition of Security Operations Centers}
+A Security Operations Center (SOC) is a centralized unit that continuously monitors, detects, investigates, and responds to cybersecurity events for an organization. SOCs function as the central hub of cybersecurity initiatives by delivering immediate insight into security occurrences and orchestrating incident response efforts.
+
+\subsection{Functions of a SOC}
+The primary functions of a SOC include:
+\begin{itemize}
+    \item Continuous security monitoring
+    \item Threat detection and analysis
+    \item Incident investigation
+    \item Incident response and containment
+    \item Threat intelligence integration
+    \item Compliance monitoring
+\end{itemize}
+
+\subsection{Challenges of Traditional SOCs}
+Traditional SOCs face several operational challenges:
+\begin{itemize}
+    \item Alert fatigue
+    \item High false-positive rates
+    \item Shortage of cybersecurity professionals
+    \item Increasing attack complexity
+    \item Slow response times
+    \item Manual investigation processes
+\end{itemize}
+
+These limitations have encouraged organizations to explore AI-driven solutions for SOC modernization.
+
+% ------------------------------------------------------------
+\section{Artificial Intelligence in Cybersecurity}
+\label{sec:ai_cyber}
+
+\subsection{Overview of AI in Cybersecurity}
+Artificial Intelligence has emerged as a transformative technology in cybersecurity. Artificial intelligence systems can also analyze large volumes of security data, detect anomalous patterns and allow for automated decisions.
+
+\subsection{Applications of AI in SOCs}
+AI is commonly applied in:
+\begin{itemize}
+    \item Intrusion Detection Systems (IDS)
+    \item Malware classification
+    \item User behavior analytics
+    \item Threat intelligence analysis
+    \item Security automation
+    \item Incident response
+\end{itemize}
+
+\subsection{Benefits of AI in SOC Operations}
+AI contributes to:
+\begin{itemize}
+    \item Faster threat detection
+    \item Improved detection accuracy
+    \item Reduced analyst workload
+    \item Automated incident prioritization
+    \item Enhanced scalability
+\end{itemize}
+
+% ------------------------------------------------------------
+\section{AI Agents}
+\label{sec:ai_agents}
+
+\subsection{Concept of AI Agents}
+AI agents are autonomous software entities that can sense their environment, process available data, make decisions, and act to achieve specified goals.
+
+An AI agent typically consists of:
+\begin{itemize}
+    \item Perception module
+    \item Reasoning engine
+    \item Decision module
+    \item Action execution component
+    \item Learning mechanism
+\end{itemize}
+
+\subsection{AI Agents in Cybersecurity}
+Within cybersecurity environments, AI agents can:
+\begin{enumerate}[label=\arabic*.]
+    \item Monitor security events
+    \item Analyze alerts
+    \item Correlate incidents
+    \item Recommend remediation actions
+    \item Execute automated responses
+\end{enumerate}
+
+\subsection{Benefits of AI Agents in SOCs}
+\begin{itemize}
+    \item Reduced response time
+    \item Continuous monitoring
+    \item Autonomous decision support
+    \item Scalability across large environments
+    \item Improved operational efficiency
+\end{itemize}
+
+% ------------------------------------------------------------
+\section{Cognitive AI Agents}
+\label{sec:cognitive_agents}
+
+\subsection{Definition of Cognitive AI Agents}
+Cognitive AI Agents are an extension of traditional AI Agents, that incorporate capabilities based on human cognitive processes (e.g., perception, reasoning, learning, memory, adaptation and contextual understanding).
+
+\subsection{Cognitive Capabilities}
+Cognitive agents typically perform:
+\begin{itemize}
+    \item Context-aware reasoning
+    \item Knowledge representation
+    \item Learning from experience
+    \item Adaptive decision-making
+    \item Autonomous planning
+\end{itemize}
+
+\subsection{Cognitive AI Agents in SOCs}
+In Security Operations Centers, cognitive agents can:
+\begin{enumerate}[label=\arabic*.]
+    \item Correlate multi-source security data
+    \item Understand attack context
+    \item Detect unknown threats
+    \item Adapt incident response strategies
+    \item Support autonomous cybersecurity operations
+\end{enumerate}
+
+\subsection{Limitations}
+Despite their advantages, cognitive AI agents face challenges such as:
+\begin{itemize}
+    \item Lack of transparency
+    \item Complex decision processes
+    \item Trust issues among analysts
+    \item Explainability limitations
+\end{itemize}
+
+% ------------------------------------------------------------
+\section{Agentic AI}
+\label{sec:agentic_ai}
+
+\subsection{Definition of Agentic AI}
+Agentic AI is a term for intelligent systems that can autonomously pursue objectives, plan adaptively, reason, and take action with limited oversight from humans.
+
+\subsection{Characteristics of Agentic AI}
+Key characteristics include:
+\begin{itemize}
+    \item Autonomy
+    \item Goal-driven decision making
+    \item Multi-step reasoning
+    \item Adaptability
+    \item Self-directed execution
+\end{itemize}
+
+\subsection{Agentic AI in SOC Environments}
+Agentic AI enables:
+\begin{itemize}
+    \item Autonomous threat hunting
+    \item Dynamic incident response
+    \item Automated workflow orchestration
+    \item Continuous learning from security events
+\end{itemize}
+
+\subsection{Benefits and Challenges}
+\textbf{Benefits:}
+\begin{itemize}
+    \item Improved operational efficiency
+    \item Reduced analyst burden
+    \item Faster response times
+\end{itemize}
+
+\textbf{Challenges:}
+\begin{itemize}
+    \item Trust and accountability
+\end{itemize}
+
+% ------------------------------------------------------------
+\section{Autonomous Security Operations Centers}
+\label{sec:autonomous_soc}
+
+\subsection{Evolution Toward Autonomous SOCs}
+SOC evolution can be classified into:
+\begin{itemize}
+    \item Level 1: Manual SOC
+    \item Level 2: Automated SOC
+    \item Level 3: AI-Assisted SOC
+    \item Level 4: Semi-Autonomous SOC
+    \item Level 5: Fully Autonomous SOC
+\end{itemize}
+
+\subsection{Autonomous SOC Architecture}
+Autonomous SOCs combine:
+\begin{itemize}
+    \item AI Agents
+    \item SOAR platforms
+    \item SIEM systems
+    \item Threat intelligence platforms
+    \item Automated response engines
+\end{itemize}
+
+\subsection{Current Limitations}
+\begin{itemize}
+    \item Dependence on human validation
+    \item Explainability concerns
+    \item Regulatory challenges
+    \item Adversarial attacks against AI systems
+\end{itemize}
+
+% ------------------------------------------------------------
+\section{Explainable Artificial Intelligence (XAI)}
+\label{sec:xai}
+
+\subsection{Definition of XAI}
+Explainable Artificial Intelligence (XAI) refers to methods that provide understandable explanations for decisions made by artificial intelligence systems.
+
+\subsection{Importance of XAI in Cybersecurity}
+XAI helps:
+\begin{itemize}
+    \item Improve transparency
+    \item Increase analyst trust
+    \item Support decision validation
+    \item Facilitate compliance requirements
+\end{itemize}
+
+\subsection{Common XAI Techniques}
+\begin{itemize}
+    \item SHAP
+    \item TreeSHAP
+    \item LIME
+    \item Rule-based explanations
+    \item Feature importance analysis
+\end{itemize}
+
+\subsection{Challenges of XAI in SOCs}
+\begin{itemize}
+    \item Explanation latency
+    \item Explanation instability
+    \item Information overload
+    \item Lack of analyst-centered explanations
+\end{itemize}
+
+% ------------------------------------------------------------
+\section{Previous Studies}
+\label{sec:previous_studies}
+
+\subsection{Study 1 (Sugumar, 2024)}
+
+\subsubsection*{Title:}
+Next-Generation Security Operations Center (SOC) Robustness: Self-Sufficient Detection and Flexible Incident Management with Cognitive AI Agents
+
+\subsubsection*{Key Findings:}
+\begin{itemize}
+    \item Introduced Cognitive AI Agents for SOC operations.
+    \item Improved detection accuracy by 18\%.
+    \item Reduced MTTD by 35\%.
+    \item Reduced MTTR by 42\%.
+\end{itemize}
+
+\subsubsection*{Limitations:}
+\begin{itemize}
+    \item Lack of Explainable AI.
+    \item Evaluated in simulated environments.
+    \item Limited human trust assessment.
+\end{itemize}
+
+\subsection{Study 2 (Javed \& Kollwitz, 2024)}
+
+\subsubsection*{Title:}
+Agentic AI in Security Operations Centers: Proactive Protection of Intelligent Infrastructure against Social Engineering Threats
+
+\subsubsection*{Key Findings:}
+\begin{itemize}
+    \item Applied Agentic AI to social engineering defense.
+    \item Emphasized proactive threat prevention.
+    \item Improved autonomous identity verification.
+\end{itemize}
+
+\subsubsection*{Limitations:}
+\begin{itemize}
+    \item Conceptual framework only.
+    \item Limited practical validation.
+    \item No explainability mechanism.
+\end{itemize}
+
+\subsection{Study 3 (Mareedu, 2025)}
+
+\subsubsection*{Title:}
+Autonomous Security Operations Centers (SOC): AI Agents for Threat Assessment, Mitigation and Coordination
+
+\subsubsection*{Key Findings:}
+\begin{itemize}
+    \item Reviewed Autonomous SOC evolution.
+    \item Discussed AI Agents, SOAR, SIEM, and EDR integration.
+    \item Defined the vision of Level 5 Autonomous SOC.
+\end{itemize}
+
+\subsubsection*{Limitations:}
+\begin{itemize}
+    \item Explainability remains unresolved.
+    \item Continued dependence on Human-in-the-Loop models.
+    \item Governance concerns.
+\end{itemize}
+
+\subsection{Study 4 (Lee et al., 2026)}
+
+\subsubsection*{Title:}
+Practical and Analyst-Acceptable Explainable AI for Supporting Decision-Making in SOCs
+
+\subsubsection*{Key Findings:}
+\begin{itemize}
+    \item Developed TreeSHAP-based XAI framework.
+    \item Increased explanation acceptance.
+    \item Reduced explanation latency.
+\end{itemize}
+
+\subsubsection*{Limitations:}
+\begin{itemize}
+    \item Focused only on XAI.
+    \item Did not integrate AI Agents.
+    \item Did not address autonomous SOC environments.
+\end{itemize}
+
+% ------------------------------------------------------------
+\section{Comparison of Previous Studies}
+\label{sec:comparison}
+
+\begin{table}[h!]
+\centering
+\caption{Comparison of Previous Studies}
+\label{tab:comparison}
+\small
+\begin{tabularx}{\textwidth}{|l|c|X|c|c|c|c|c|c|}
+\hline
+\textbf{Study} & \textbf{Year} & \textbf{Focus Area} & \textbf{AI Agents} & \textbf{Cognitive AI} & \textbf{Agentic AI} & \textbf{Autonomous SOC} & \textbf{XAI} & \textbf{Analyst Trust} \\
+\hline
+Sugumar & 2024 & Cognitive SOC & \checkmark & \checkmark & $\times$ & Partial & $\times$ & Limited \\
+\hline
+Javed \& Kollwitz & 2024 & Agentic AI & \checkmark & $\times$ & \checkmark & Partial & $\times$ & Limited \\
+\hline
+Mareedu & 2025 & Autonomous SOC & \checkmark & $\times$ & \checkmark & \checkmark & Limited & Limited \\
+\hline
+Lee et al. & 2026 & Explainable AI & $\times$ & $\times$ & $\times$ & $\times$ & \checkmark & \checkmark \\
+\hline
+\end{tabularx}
+\end{table}
+
+% ------------------------------------------------------------
+\section{Research Gap}
+\label{sec:research_gap}
+
+The literature reviewed shows a remarkable advancement of the use of AI Agents, Cognitive AI Agents, Agentic AI, Autonomous SOCs, and Explainable AI in security operations.
+
+\begin{enumerate}[label=\arabic*.]
+    \item Existing Agentic AI frameworks do not incorporate explainability mechanisms.
+    \item Current XAI solutions do not integrate with autonomous AI agents.
+    \item Analyst trust remains insufficiently addressed.
+    \item Analyst confidence is still not being properly addressed.
+    \item There is limited research that integrates Agentic AI and XAI within a cohesive SOC framework.
+\end{enumerate}
+
+Thus, a research gap exists to develop a holistic Explainable Agentic AI Framework that can improve threat detection, incident response, and analyst confidence at the same time.
+
+% ------------------------------------------------------------
+\section{Conceptual Framework}
+\label{sec:conceptual_framework}
+
+The proposed conceptual framework consists of five main layers:
+
+\begin{enumerate}[label=\arabic*.]
+    \item \textbf{Data Collection Layer}
+    \begin{itemize}
+        \item Network Logs
+        \item Endpoint Telemetry
+        \item Threat Intelligence
+    \end{itemize}
+    
+    \item \textbf{Agentic AI Layer}
+    \begin{itemize}
+        \item Detection Agent
+        \item Analysis Agent
+        \item Response Agent
+    \end{itemize}
+    
+    \item \textbf{Explainability Layer}
+    \begin{itemize}
+        \item SHAP / TreeSHAP
+        \item Decision Explanation Engine
+    \end{itemize}
+    
+    \item \textbf{Analyst Interaction Layer}
+    \begin{itemize}
+        \item Alert Review
+        \item Explanation Validation
+        \item Trust Assessment
+    \end{itemize}
+    
+    \item \textbf{Response Layer}
+    \begin{itemize}
+        \item Automated Response
+        \item Incident Containment
+        \item Continuous Learning
+    \end{itemize}
+\end{enumerate}
+
+The framework combines self-governing decision making with transparent reasoning to improve operational efficiency and analyst confidence in Security Operations Centers.
+
+% ============================================================
+% CHAPTER THREE: RESEARCH METHODOLOGY
+% ============================================================
+\chapter{Research Methodology}
+\label{ch:methodology}
+
+\section{Introduction}
+\label{sec:method_intro}
+
+This chapter presents the methodology used in developing and evaluating the proposed Explainable Agentic AI Framework for Security Operations Centers (SOCs). It discusses the research methodology, experimental setup, data sources, development tools, framework architecture, explainability aspect, and evaluation metrics used to assess the effectiveness of the proposed system in enhancing threat detection, incident response, and analyst confidence.
+
+% ------------------------------------------------------------
+\section{Research Design}
+\label{sec:research_design}
+
+This research uses the Design Science Research (DSR) method combined with Quantitative Experimental Research. Since the main aim is to design, develop, and evaluate an innovative cyber security artifact, the Explainable Agentic AI Framework for SOC operations, the Design Science Research methodology is selected.
+
+The research process consists of six phases:
+
+\subsection{Phase 1: Problem Identification}
+Analyze limitations of traditional SOCs. Identify challenges related to:
+\begin{itemize}
+    \item Alert fatigue
+    \item Slow incident response
+    \item Limited explainability
+    \item Low analyst trust
+\end{itemize}
+
+\subsection{Phase 2: Literature Review}
+Review existing research on:
+\begin{itemize}
+    \item Security Operations Centers
+    \item AI in Cybersecurity
+    \item AI Agents
+    \item Cognitive AI Agents
+    \item Agentic AI
+    \item Autonomous SOCs
+    \item Explainable AI
+\end{itemize}
+
+\subsection{Phase 3: Framework Design}
+Design the proposed framework integrating:
+\begin{itemize}
+    \item Agentic AI
+    \item Explainable AI
+    \item Human-in-the-loop validation
+\end{itemize}
+
+\subsection{Phase 4: Framework Implementation}
+Develop the framework components and instantiate them in a SOC simulation environment.
+
+\subsection{Phase 5: Experimental Evaluation}
+Develop cybersecurity data sets and evaluate the effectiveness of the framework.
+
+\subsection{Phase 6: Result Analysis}
+Use metrics of trust and performance to measure effectiveness.
+
+% ------------------------------------------------------------
+\section{Experimental Environment}
+\label{sec:experimental_env}
+
+The proposed framework will be evaluated within a simulated Security Operations Center environment.
+
+\begin{table}[h!]
+\centering
+\caption{Proposed Timeline}
+\label{tab:timeline}
+\begin{tabularx}{\textwidth}{|c|X|c|}
+\hline
+\textbf{Phase} & \textbf{Activity} & \textbf{Months} \\
+\hline
+1 & Literature Review \& Problem Refinement & 1--2 \\
+\hline
+2 & Framework Design \& Architecture Definition & 2--3 \\
+\hline
+3 & Implementation of Agentic AI \& XAI Layers & 3--4 \\
+\hline
+4 & Experimental Setup \& Data Preparation & 4--5 \\
+\hline
+5 & Evaluation, Testing, \& Data Collection & 5--6 \\
+\hline
+6 & Analysis, Thesis Writing, \& Submission & 6--7 \\
+\hline
+\end{tabularx}
+\end{table}
+
+\subsection{Infrastructure Components}
+
+\begin{table}[h!]
+\centering
+\caption{Infrastructure Components}
+\label{tab:infrastructure}
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline
+\textbf{Component} & \textbf{Specification} \\
+\hline
+Operating System & Ubuntu Server 24.04 LTS \\
+\hline
+CPU & Intel Xeon / AMD EPYC \\
+\hline
+RAM & 32--64 GB \\
+\hline
+Storage & SSD \\
+\hline
+Programming Language & Python 3.12 \\
+\hline
+Database & PostgreSQL \\
+\hline
+Visualization & Grafana \\
+\hline
+Development Framework & Django \\
+\hline
+\end{tabularx}
+\end{table}
+
+\subsection{Security Platforms}
+The experimental SOC may include:
+\begin{itemize}
+    \item SIEM Platform
+    \item SOAR Platform
+    \item Threat Intelligence Platform
+    \item Endpoint Monitoring
+\end{itemize}
+
+Possible open-source tools:
+\begin{itemize}
+    \item Elastic SIEM
+    \item Wazuh
+    \item TheHive
+    \item Cortex
+    \item MISP
+\end{itemize}
+
+% ------------------------------------------------------------
+\section{Data Sources}
+\label{sec:data_sources}
+
+The framework will be evaluated using publicly available cybersecurity datasets.
+
+\subsection{CICIDS2017}
+Contains:
+\begin{itemize}
+    \item DDoS
+    \item Port Scanning
+    \item Brute Force
+    \item Botnet
+    \item Web Attacks
+\end{itemize}
+
+\textbf{Advantages:}
+\begin{itemize}
+    \item Widely used benchmark dataset.
+    \item Realistic network traffic.
+\end{itemize}
+
+\subsection{CICIDS2018}
+Contains:
+\begin{itemize}
+    \item Advanced attack scenarios.
+    \item Modern threat patterns.
+    \item Enterprise network simulations.
+\end{itemize}
+
+\subsection{UNSW-NB15}
+Contains:
+\begin{itemize}
+    \item Normal traffic
+    \item Fuzzers
+    \item Exploits
+    \item Generic attacks
+    \item Reconnaissance attacks
+\end{itemize}
+
+\subsection{Security Log Sources}
+Additional log formats may include:
+\begin{itemize}
+    \item Syslog
+    \item Windows Event Logs
+    \item Endpoint Telemetry
+\end{itemize}
+
+% ------------------------------------------------------------
+\section{Development Tools}
+\label{sec:dev_tools}
+
+\subsection{Programming Environment}
+
+\begin{table}[h!]
+\centering
+\caption{Programming Environment Tools}
+\label{tab:prog_env}
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline
+\textbf{Tool} & \textbf{Purpose} \\
+\hline
+Python & AI Development \\
+\hline
+Django & Framework Dashboard \\
+\hline
+PostgreSQL & Data Storage \\
+\hline
+Docker & Containerization \\
+\hline
+Git & Version Control \\
+\hline
+\end{tabularx}
+\end{table}
+
+\subsection{AI Libraries}
+
+\begin{table}[h!]
+\centering
+\caption{AI Libraries}
+\label{tab:ai_libs}
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline
+\textbf{Library} & \textbf{Purpose} \\
+\hline
+Scikit-Learn & Machine Learning \\
+\hline
+TensorFlow & Deep Learning \\
+\hline
+PyTorch & Deep Learning \\
+\hline
+LangChain & Agent Workflow \\
+\hline
+CrewAI & Multi-Agent Architecture \\
+\hline
+OpenAI API / Ollama & LLM Integration \\
+\hline
+\end{tabularx}
+\end{table}
+
+\subsection{Explainability Libraries}
+
+\begin{table}[h!]
+\centering
+\caption{Explainability Libraries}
+\label{tab:xai_libs}
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline
+\textbf{Library} & \textbf{Purpose} \\
+\hline
+SHAP & Explainability \\
+\hline
+TreeSHAP & Feature Attribution \\
+\hline
+LIME & Local Explanations \\
+\hline
+\end{tabularx}
+\end{table}
+
+% ------------------------------------------------------------
+\section{Proposed Agent Architecture Design}
+\label{sec:agent_architecture}
+
+The proposed architecture consists of multiple specialized AI agents.
+
+\subsection{Agent 1: Threat Detection Agent}
+
+\textbf{Responsibilities:}
+\begin{itemize}
+    \item Monitor security events.
+    \item Detect anomalies.
+    \item Identify potential threats.
+\end{itemize}
+
+\textbf{Inputs:}
+\begin{itemize}
+    \item Network traffic
+    \item Security logs
+    \item Endpoint telemetry
+\end{itemize}
+
+\textbf{Outputs:}
+\begin{itemize}
+    \item Threat alerts
+\end{itemize}
+
+\subsection{Agent 2: Threat Analysis Agent}
+
+\textbf{Responsibilities:}
+\begin{itemize}
+    \item Correlate alerts.
+    \item Assess severity.
+    \item Classify incidents.
+\end{itemize}
+
+\textbf{Outputs:}
+\begin{itemize}
+    \item Risk score
+    \item Incident classification
+\end{itemize}
+
+\subsection{Agent 3: Response Agent}
+
+\textbf{Responsibilities:}
+\begin{itemize}
+    \item Recommend mitigation actions.
+    \item Execute automated responses.
+\end{itemize}
+
+\textbf{Examples:}
+\begin{itemize}
+    \item Block IP address
+    \item Disable account
+    \item Isolate endpoint
+\end{itemize}
+
+\subsection{Agent 4: Knowledge Agent}
+
+\textbf{Responsibilities:}
+\begin{itemize}
+    \item Query threat intelligence sources.
+    \item Retrieve attack context.
+\end{itemize}
+
+\textbf{Sources:}
+\begin{itemize}
+    \item MITRE ATT\&CK
+    \item Threat Intelligence Feeds
+\end{itemize}
+
+\subsection{Agent 5: Trust and Explanation Agent}
+
+\textbf{Responsibilities:}
+\begin{itemize}
+    \item Generate explanations.
+    \item Support analyst decision-making.
+    \item Improve transparency.
+\end{itemize}
+
+\subsection{Multi-Agent Workflow}
+% Placeholder for multi-agent workflow figure
+% \begin{figure}[h!]
+% \centering
+% \includegraphics[width=0.8\textwidth]{multi_agent_workflow.png}
+% \caption{Multi-Agent Workflow}
+% \label{fig:multi_agent_workflow}
+% \end{figure}
+
+% ------------------------------------------------------------
+\section{XAI Layer Design}
+\label{sec:xai_layer}
+
+The Explainability Layer is integrated into all AI decisions.
+
+\subsection{Objectives}
+\begin{itemize}
+    \item Improve transparency.
+    \item Increase analyst trust.
+    \item Support auditing and compliance.
+\end{itemize}
+
+\subsection{Components}
+
+\subsubsection{Feature Importance Module}
+\textbf{Uses:}
+\begin{itemize}
+    \item SHAP
+    \item TreeSHAP
+\end{itemize}
+
+\textbf{Outputs:}
+\begin{itemize}
+    \item Most influential attack indicators.
+\end{itemize}
+
+\subsubsection{Decision Explanation Module}
+\textbf{Provides:}
+\begin{itemize}
+    \item Why was this alert generated?
+    \item Why was this response selected?
+    \item Which factors influenced the decision?
+\end{itemize}
+
+\subsubsection{Analyst Dashboard}
+\textbf{Displays:}
+\begin{itemize}
+    \item Alert
+    \item Risk score
+    \item Recommended response
+    \item AI explanation
+\end{itemize}
+
+\subsection{Example Explanation}
+\textbf{Threat:} Brute Force Attack
+
+\textbf{Confidence Score:} 94\%
+
+\textbf{Key Factors:}
+\begin{itemize}
+    \item Failed Login Attempts: 45\%
+    \item Source IP Reputation: 30\%
+    \item Unusual Access Pattern: 25\%
+\end{itemize}
+
+\textbf{Recommended Action:}
+\begin{itemize}
+    \item Block Source IP
+\end{itemize}
+
+% ------------------------------------------------------------
+\section{Measurement Indicators}
+\label{sec:measurement}
+
+The effectiveness of the proposed framework will be evaluated using the following metrics.
+
+\subsection{Threat Detection Metrics}
+
+\subsubsection{Accuracy}
+\begin{equation}
+\mathrm{Accuracy} = \frac{TP + TN}{TP + TN + FP + FN}
+\end{equation}
+Measures overall prediction correctness.
+
+\subsubsection{Precision}
+\begin{equation}
+\mathrm{Precision} = \frac{TP}{TP + FP}
+\end{equation}
+Measures correctness of detected attacks.
+
+\subsubsection{Recall}
+\begin{equation}
+\mathrm{Recall} = \frac{TP}{TP + FN}
+\end{equation}
+Measures detection capability.
+
+\subsubsection{F1 Score}
+\begin{equation}
+F1 = 2 \times \frac{\mathrm{Precision} \times \mathrm{Recall}}{\mathrm{Precision} + \mathrm{Recall}}
+\end{equation}
+Measures balance between precision and recall.
+
+% ------------------------------------------------------------
+\section{SOC Operational Metrics}
+\label{sec:soc_metrics}
+
+\subsection{Mean Time to Detect (MTTD)}
+Measures the average time required to identify a threat.
+
+\textbf{Target:}
+\begin{itemize}
+    \item Reduction compared to traditional SOC systems.
+\end{itemize}
+
+\subsection{Mean Time to Respond (MTTR)}
+Measures the average time required to respond to incidents.
+
+\textbf{Target:}
+\begin{itemize}
+    \item Reduction through agent automation.
+\end{itemize}
+
+\subsection{Alert Reduction Rate}
+Measures reduction in false-positive alerts.
+
+\subsection{Incident Resolution Rate}
+Measures percentage of incidents successfully handled.
+
+% ------------------------------------------------------------
+\section{Explainability and Trust Metrics}
+\label{sec:trust_metrics}
+
+Since this thesis focuses on Analyst Trust, these metrics are very important.
+
+\subsection{Explanation Acceptance Rate (EAR)}
+Percentage of explanations accepted by analysts.
+
+\subsection{Explanation Sufficiency Score (ESS)}
+Measures whether explanations provide enough information for decision-making.
+
+\subsection{Analyst Trust Score (ATS)}
+Measured using a Likert-scale questionnaire:
+
+\begin{table}[h!]
+\centering
+\caption{Likert Scale for Analyst Trust Score}
+\label{tab:likert}
+\begin{tabular}{|c|l|}
+\hline
+\textbf{Score} & \textbf{Meaning} \\
+\hline
+1 & Strongly Disagree \\
+\hline
+2 & Disagree \\
+\hline
+3 & Neutral \\
+\hline
+4 & Agree \\
+\hline
+5 & Strongly Agree \\
+\hline
+\end{tabular}
+\end{table}
+
+Example questions:
+\begin{itemize}
+    \item I understand why the AI generated this alert.
+    \item I trust the AI recommendation.
+    \item The explanation supports my decision-making.
+\end{itemize}
+
+\subsection{Explanation Latency}
+Measures the time required to generate explanations.
+
+\textbf{Goal:}
+\begin{itemize}
+    \item Lower than traditional SHAP/LIME implementations.
+    \item Suitable for real-time SOC environments.
+\end{itemize}
+
+% ------------------------------------------------------------
+\section{Chapter Summary}
+\label{sec:chapter_summary}
+
+In this chapter, we describe the research methodology, including the research design, experimental setup, datasets, development tools, agent architecture, XAI layer configuration, and evaluation metrics. These elements provide the foundation for the implementation and evaluation of the proposed Explainable Agentic AI Framework, which is presented in Chapter Four.
+
+% ============================================================
+% REFERENCES
+% ============================================================
+\chapter*{References}
+\addcontentsline{toc}{chapter}{References}
+
+\begin{enumerate}[label={},leftmargin=*]
+	
+	\item Javed, Y., \& Kollwitz, C. (2024). Agentic AI in SOC Operations: Proactively Securing Smart Infrastructure Against Social Engineering.
+	
+	\item Lee, et al. (2026). Practical and Analyst-Acceptable Explainable AI for Supporting Decision-Making in SOCs.
+	
+	\item Mareedu, A. (2025). Autonomous Security Operations Centers (SOC): AI Agents for Threat Triage, Response, and Orchestration.
+	
+	\item Sugumar, R. (2024). Next-Generation Security Operations Center (SOC) Resilience: Autonomous Detection and Adaptive Incident Response Using Cognitive AI Agents.
+	
+\end{enumerate}
+
+\end{document}
